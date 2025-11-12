@@ -2,14 +2,15 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star, MessageCircle } from "lucide-react";
+import { Star, MessageCircle, MapPin } from "lucide-react";
 import type { Handyman } from "@/types";
 
 interface HandymanCardProps {
   handyman: Handyman;
+  showDistance?: boolean;
 }
 
-export default function HandymanCard({ handyman }: HandymanCardProps) {
+export default function HandymanCard({ handyman, showDistance = false }: HandymanCardProps) {
   const getProfileImage = (type: string) => {
     const images: Record<string, string> = {
       electrician: "/src/../attached_assets/generated_images/Male_electrician_portrait_be343d94.png",
@@ -28,7 +29,7 @@ export default function HandymanCard({ handyman }: HandymanCardProps) {
   return (
     <Card 
       data-testid={`card-handyman-${handyman.id}`}
-      className="overflow-hidden hover-elevate transition-all duration-300"
+      className="overflow-hidden hover-elevate transition-all duration-300 border-primary/20"
     >
       <CardContent className="p-6">
         <div className="flex items-start gap-4">
@@ -44,7 +45,7 @@ export default function HandymanCard({ handyman }: HandymanCardProps) {
               {handyman.name}
             </h3>
             
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-3 mb-3 flex-wrap">
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-primary text-primary" />
                 <span className="font-medium text-primary" data-testid={`text-rating-${handyman.id}`}>
@@ -54,6 +55,14 @@ export default function HandymanCard({ handyman }: HandymanCardProps) {
               <span className="text-sm text-muted-foreground">
                 ({handyman.reviews} reviews)
               </span>
+              {showDistance && handyman.distance !== undefined && (
+                <div className="flex items-center gap-1 text-sm text-primary">
+                  <MapPin className="h-3.5 w-3.5" />
+                  <span className="font-medium" data-testid={`text-distance-${handyman.id}`}>
+                    {handyman.distance.toFixed(1)} km
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-2">

@@ -9,6 +9,7 @@ export interface Handyman {
   latitude: number;
   longitude: number;
   category: string;
+  distance?: number;
 }
 
 export interface Category {
