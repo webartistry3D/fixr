@@ -6,6 +6,7 @@ import SearchBar from "@/components/SearchBar";
 import CategoryGrid from "@/components/CategoryGrid";
 import HandymanGrid from "@/components/HandymanGrid";
 import Map from "@/components/Map";
+import InstallPrompt from "@/components/InstallPrompt";
 import type { Handyman, Category } from "@/types";
 import logoImage from "@assets/generated_images/Fixr_neon_logo_7d91c012.png";
 
@@ -145,6 +146,8 @@ export default function Home() {
           <p>&copy; 2024 Fixr. Connecting you with skilled professionals.</p>
         </div>
       </footer>
+
+      <InstallPrompt />
     </div>
   );
 }
