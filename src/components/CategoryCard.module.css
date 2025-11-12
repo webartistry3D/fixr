@@ -1,0 +1,18 @@
+.categoryCard {
+  background-color: #1a1a1a;
+  color: #00ffff;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.categoryCard:hover {
+  background-color: #2c2c2c;
+  box-shadow: 0 0 8px #00ffff55;
+}
+
+.selected {
+  border: 2px solid #00ffff;
+}

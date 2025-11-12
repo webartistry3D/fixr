@@ -85,6 +85,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
+        orbitron: ['Orbitron', 'sans-serif'],
         mono: ["var(--font-mono)"],
       },
       keyframes: {

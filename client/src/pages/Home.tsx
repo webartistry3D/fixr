@@ -171,17 +171,16 @@ export default function Home() {
                     <span className="text-sm font-medium text-primary">Instant Professional Matching</span>
                   </div>
                   
-                  <h2 className="text-5xl md:text-7xl font-bold leading-tight">
-                    Find Expert{" "}
-                    <span className="bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient">
-                      Handymen
+                  <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                    Find a {" "}
+                    <span className="text-5xl md:text-7xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
+                      F🔌🛠️ R
                     </span>{" "}
-                    <br />Near You
+                    Near You
                   </h2>
                   
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                    Connect with verified, skilled professionals for all your home repair and maintenance needs. 
-                    Search by service and discover top-rated experts based on your location.
+                    Connect with verified, top-rated technicians for all your home repair and maintenance needs.
                   </p>
 
                   <div className="flex flex-col items-center gap-6 pt-8">
@@ -204,7 +203,8 @@ export default function Home() {
                         <MapPin className="h-4 w-4 text-primary" />
                         <span>
                           {locationPermission === 'granted' 
-                            ? 'Location detected - showing nearby professionals'
+                            //? 'Location detected - showing nearby professionals'
+                            ? 'See location of nearby professionals'
                             : 'Enable location for proximity-based results'}
                         </span>
                       </div>
