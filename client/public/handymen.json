@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "Mike Johnson",
+    "skills": ["Electrical", "Lighting", "Wiring"],
+    "rating": 4.8,
+    "reviews": 127,
+    "whatsapp": "+1234567890",
+    "profilePicture": "electrician",
+    "latitude": 40.7589,
+    "longitude": -73.9851,
+    "category": "Electrical"
+  },
+  {
+    "id": "2",
+    "name": "Sarah Martinez",
+    "skills": ["Plumbing", "Pipe Repair", "Drain Cleaning"],
+    "rating": 4.9,
+    "reviews": 203,
+    "whatsapp": "+1234567891",
+    "profilePicture": "plumber",
+    "latitude": 40.7614,
+    "longitude": -73.9776,
+    "category": "Plumbing"
+  },
+  {
+    "id": "3",
+    "name": "David Chen",
+    "skills": ["Carpentry", "Furniture", "Woodwork"],
+    "rating": 4.7,
+    "reviews": 89,
+    "whatsapp": "+1234567892",
+    "profilePicture": "carpenter",
+    "latitude": 40.7489,
+    "longitude": -73.9680,
+    "category": "Carpentry"
+  },
+  {
+    "id": "4",
+    "name": "Jessica Taylor",
+    "skills": ["HVAC", "AC Repair", "Heating"],
+    "rating": 5.0,
+    "reviews": 156,
+    "whatsapp": "+1234567893",
+    "profilePicture": "hvac",
+    "latitude": 40.7580,
+    "longitude": -73.9855,
+    "category": "HVAC"
+  },
+  {
+    "id": "5",
+    "name": "Robert Williams",
+    "skills": ["Painting", "Interior", "Exterior"],
+    "rating": 4.6,
+    "reviews": 94,
+    "whatsapp": "+1234567894",
+    "profilePicture": "painter",
+    "latitude": 40.7505,
+    "longitude": -73.9934,
+    "category": "Painting"
+  }
+]
