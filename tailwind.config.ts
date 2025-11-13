@@ -6,9 +6,9 @@ export default {
   theme: {
     extend: {
       borderRadius: {
-        lg: ".5625rem", /* 9px */
-        md: ".375rem", /* 6px */
-        sm: ".1875rem", /* 3px */
+        lg: ".5625rem", // 9px
+        md: ".375rem",  // 6px
+        sm: ".1875rem", // 3px
       },
       colors: {
         background: "hsl(var(--background) / <alpha-value>)",
@@ -96,17 +96,25 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        // New clockwise spin for logo
         "spin-slow": {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(360deg)" },
         },
+        /* NEW: smooth gradient animation
+        "gradient-move": {
+          '0%': { 'background-position': '0% 0%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 0%' },
+        },*/
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        // New slow spin animation
         "spin-slow": "spin-slow 6s linear infinite",
+        "gradient-slow": "gradient-move 6s ease infinite",
+      },
+      backgroundSize: {
+        '200': '200% 200%',
       },
     },
   },

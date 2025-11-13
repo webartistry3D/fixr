@@ -1,6 +1,6 @@
 {
-  "name": "Fixr - Handyman Hub",
-  "short_name": "Fixr",
+  "name": "F 💈🛠️ R - Handyman Hub",
+  "short_name": "FIXR",
   "description": "Find skilled handymen near you. Browse by category, search by skill, and connect instantly.",
   "start_url": "/",
   "display": "standalone",
@@ -17,6 +17,12 @@
     {
       "src": "/favicon.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any maskable"
     }
