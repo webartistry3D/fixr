@@ -132,7 +132,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <img src={logoImage} alt="Fixr Logo" className="h-16 w-16 animate-spin-slow" />
             <h1 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-              F🔌🛠️ R
+              F💈🛠️ R
             </h1>
           </div>
 
@@ -171,7 +171,7 @@ export default function Home() {
                     <span className="ml-4 md:ml-6 font-orbitron text-2xl md:text-4xl 
                                 bg-gradient-to-r from-primary via-cyan-400 to-primary 
                                 bg-clip-text text-transparent animate-gradient mr-4 md:mr-6">
-                      F🔌🛠️ R
+                      F⚡🛠️ R
                     </span>
                     <span className="tracking-wide">Near &nbsp;You</span>
                   </h2>
