@@ -7,7 +7,7 @@ import HandymanGrid from "@/components/HandymanGrid";
 import Map from "@/components/Map";
 import InstallPrompt from "@/components/InstallPrompt";
 import type { Handyman, Category } from "@/types";
-import logoImage from "@assets/generated_images/Fixr_neon_logo_7d91c012.png";
+import logoImage from "@assets/generated_images/fixr-logo.png";
 
 const CATEGORIES: Category[] = [
   { name: "Electrical", icon: "⚡" },
@@ -127,20 +127,27 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-primary/20 bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-center relative">
+          {/* Logo + Title centered */}
           <div className="flex items-center gap-3">
-            <img src={logoImage} alt="Fixr Logo" className="h-10 w-10" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-              Fixr
+            <img src={logoImage} alt="Fixr Logo" className="h-16 w-16 animate-spin-slow" />
+            <h1 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              F🔌🛠️ R
             </h1>
           </div>
-          <Link href="/add-handyman">
-            <Button variant="outline" className="border-primary/50 hover:border-primary">
-              <Wrench className="h-4 w-4 mr-2" /> Add Professional
-            </Button>
-          </Link>
+
+          {/* Optional: right/left buttons can be absolute if needed */}
+          {/* Example: Add Professional button on the right */}
+          {/* <div className="absolute right-4">
+            <Link href="/add-handyman">
+              <Button variant="outline" className="border-primary/50 hover:border-primary">
+                <Wrench className="h-4 w-4 mr-2" /> Add Professional
+              </Button>
+            </Link>
+          </div> */}
         </div>
       </header>
+
 
       <main>
         {!shouldShowResults ? (
@@ -159,8 +166,8 @@ export default function Home() {
                     <Zap className="h-4 w-4 text-primary" />
                     <span className="text-sm font-medium text-primary">Instant Professional Matching</span>
                   </div>
-                  <h2 className="text-2xl md:text-5xl font-bold leading-tight">
-                    Find a <span className="text-4xl md:text-5xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
+                  <h2 className="text-2xl md:text-4xl font-bold leading-tight">
+                    Find a <span className="text-2xl md:text-4xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
                       F🔌🛠️ R
                     </span> Near You
                   </h2>
@@ -275,7 +282,7 @@ export default function Home() {
 
       <footer className="border-t border-primary/10 mt-16 py-8 bg-card/30">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          &copy; 2024 Fixr. Connecting you with skilled professionals.
+          © 2025 FIXR. Powered 💡 by WebArtistry Creations®
         </div>
       </footer>
 
