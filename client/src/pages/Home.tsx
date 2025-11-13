@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Wrench, MapPin, Zap, Star, ArrowRight, Search as SearchIcon } from "lucide-react";
-import SearchBar from "@/components/SearchBar";
 import CategoryGrid from "@/components/CategoryGrid";
 import HandymanGrid from "@/components/HandymanGrid";
 import Map from "@/components/Map";
@@ -28,11 +27,11 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
+  const a =
+    Math.sin(dLat / 2) ** 2 +
     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
 
@@ -45,11 +44,11 @@ export default function Home() {
   const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt'>('prompt');
   const [hasSearched, setHasSearched] = useState(false);
 
+  // Load handymen JSON
   useEffect(() => {
     const loadHandymen = async () => {
       try {
         const localData = localStorage.getItem('handymen');
-        
         if (localData) {
           setHandymen(JSON.parse(localData));
         } else {
@@ -64,10 +63,10 @@ export default function Home() {
         setLoading(false);
       }
     };
-
     loadHandymen();
   }, []);
 
+  // Get user location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -78,21 +77,24 @@ export default function Home() {
           });
           setLocationPermission('granted');
         },
-        (error) => {
-          console.error('Error getting location:', error);
-          setLocationPermission('denied');
-        }
+        () => setLocationPermission('denied')
       );
     }
   }, []);
 
+  // Search input change
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-    if (value.trim() !== "" || selectedCategory) {
+  };
+
+  // Explicit search submission
+  const submitSearch = () => {
+    if (searchTerm.trim() !== "" || selectedCategory) {
       setHasSearched(true);
     }
   };
 
+  // Category selection
   const handleCategorySelect = (category: string | null) => {
     setSelectedCategory(category);
     if (category) {
@@ -101,27 +103,19 @@ export default function Home() {
   };
 
   const filteredHandymen = useMemo(() => {
-    let filtered = handymen.filter((handyman) => {
-      const matchesSearch = searchTerm === "" || 
-        handyman.skills.some(skill => 
-          skill.toLowerCase().includes(searchTerm.toLowerCase())
-        ) ||
-        handyman.name.toLowerCase().includes(searchTerm.toLowerCase());
-
+    let filtered = handymen.filter(handyman => {
+      const matchesSearch =
+        searchTerm === "" ||
+        handyman.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        handyman.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = !selectedCategory || handyman.category === selectedCategory;
-
       return matchesSearch && matchesCategory;
     });
 
     if (userLocation) {
-      filtered = filtered.map(handyman => ({
-        ...handyman,
-        distance: calculateDistance(
-          userLocation.lat,
-          userLocation.lng,
-          handyman.latitude,
-          handyman.longitude
-        )
+      filtered = filtered.map(h => ({
+        ...h,
+        distance: calculateDistance(userLocation.lat, userLocation.lng, h.latitude, h.longitude)
       })).sort((a, b) => (a.distance || 0) - (b.distance || 0));
     }
 
@@ -133,160 +127,117 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-primary/20 bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img src={logoImage} alt="Fixr Logo" className="h-10 w-10" />
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                Fixr
-              </h1>
-            </div>
-            <Link href="/add-handyman">
-              <Button 
-                data-testid="button-add-handyman"
-                variant="outline"
-                className="border-primary/50 hover:border-primary"
-              >
-                <Wrench className="h-4 w-4 mr-2" />
-                Add Professional
-              </Button>
-            </Link>
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img src={logoImage} alt="Fixr Logo" className="h-10 w-10" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              Fixr
+            </h1>
           </div>
+          <Link href="/add-handyman">
+            <Button variant="outline" className="border-primary/50 hover:border-primary">
+              <Wrench className="h-4 w-4 mr-2" /> Add Professional
+            </Button>
+          </Link>
         </div>
       </header>
 
       <main>
         {!shouldShowResults ? (
           <>
+            {/* Hero Section */}
             <section className="relative overflow-hidden">
+              {/* Background effects */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(34,211,238,0.1),transparent_50%)]" />
               <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[120px] animate-pulse" />
               <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
-              
+
               <div className="relative container mx-auto px-4 py-24 md:py-32">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-4">
                     <Zap className="h-4 w-4 text-primary" />
                     <span className="text-sm font-medium text-primary">Instant Professional Matching</span>
                   </div>
-                  
-                  <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                    Find a {" "}
-                    <span className="text-5xl md:text-7xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
+                  <h2 className="text-2xl md:text-5xl font-bold leading-tight">
+                    Find a <span className="text-4xl md:text-5xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
                       F🔌🛠️ R
-                    </span>{" "}
-                    Near You
+                    </span> Near You
                   </h2>
-                  
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                     Connect with verified, top-rated technicians for all your home repair and maintenance needs.
                   </p>
 
+                  {/* Search Input */}
                   <div className="flex flex-col items-center gap-6 pt-8">
-                    <div className="w-full max-w-2xl">
-                      <div className="relative">
-                        <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                        <input
-                          data-testid="input-search-service"
-                          type="text"
-                          value={searchTerm}
-                          onChange={(e) => handleSearch(e.target.value)}
-                          placeholder="Search for a service (e.g., electrical, plumbing, HVAC)..."
-                          className="w-full h-14 pl-12 pr-4 bg-card border-2 border-primary/30 rounded-xl text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/60"
-                        />
-                      </div>
+                    <div className="w-full max-w-2xl relative flex items-center">
+                      {/* Search Icon */}
+                      <SearchIcon className="absolute left-4 h-5 w-5 text-muted-foreground" />
+
+                      {/* Input */}
+                      <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={e => handleSearch(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && submitSearch()}
+                        placeholder="Search for a service (e.g., electrical, plumbing, HVAC)..."
+                        className="flex-1 h-14 pl-12 pr-4 bg-card border-2 border-primary/30 rounded-l-xl text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/60"
+                      />
+
+                      {/* Button */}
+                      <Button
+                        onClick={submitSearch}
+                        className="h-14 px-6 rounded-r-xl flex-shrink-0"
+                      >
+                        Search
+                      </Button>
                     </div>
 
+                    {/* Location Info */}
                     <div className="flex flex-wrap items-center justify-center gap-4">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="h-4 w-4 text-primary" />
-                        <span>
-                          {locationPermission === 'granted' 
-                            //? 'Location detected - showing nearby professionals'
-                            ? 'See location of nearby professionals'
-                            : 'Enable location for proximity-based results'}
-                        </span>
+                        <span>{locationPermission === 'granted' ? 'See location of nearby professionals' : 'Enable location for proximity-based results'}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 max-w-4xl mx-auto">
-                    <div className="p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-primary/20 hover-elevate">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <MapPin className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold mb-2">Location-Based</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Find professionals sorted by proximity to your location
-                      </p>
-                    </div>
 
-                    <div className="p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-primary/20 hover-elevate">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <Star className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold mb-2">Verified Experts</h3>
-                      <p className="text-sm text-muted-foreground">
-                        All professionals are vetted and rated by the community
-                      </p>
-                    </div>
-
-                    <div className="p-6 rounded-xl bg-card/50 backdrop-blur-sm border border-primary/20 hover-elevate">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                        <Zap className="h-6 w-6 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold mb-2">Instant Connect</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Contact professionals directly with one click
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </section>
 
+            {/* Categories */}
             <section className="py-16 border-t border-primary/10">
               <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                   <h3 className="text-3xl font-bold mb-4">Browse by Category</h3>
                   <p className="text-muted-foreground text-lg">Select a category to find specialized professionals</p>
                 </div>
-                <CategoryGrid
-                  categories={CATEGORIES}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={handleCategorySelect}
-                />
+                <CategoryGrid categories={CATEGORIES} selectedCategory={selectedCategory} onCategorySelect={handleCategorySelect} />
               </div>
             </section>
           </>
         ) : (
           <div className="container mx-auto px-4 py-8 space-y-8">
+            {/* Back button */}
             <div className="flex items-center gap-4">
               <Button
-                data-testid="button-back-to-search"
                 variant="ghost"
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedCategory(null);
-                  setHasSearched(false);
-                }}
+                onClick={() => { setSearchTerm(""); setSelectedCategory(null); setHasSearched(false); }}
                 className="gap-2"
               >
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                New Search
+                <ArrowRight className="h-4 w-4 rotate-180" /> New Search
               </Button>
             </div>
 
+            {/* Categories */}
             <section>
               <h3 className="text-2xl font-semibold mb-6">Browse by Category</h3>
-              <CategoryGrid
-                categories={CATEGORIES}
-                selectedCategory={selectedCategory}
-                onCategorySelect={handleCategorySelect}
-              />
+              <CategoryGrid categories={CATEGORIES} selectedCategory={selectedCategory} onCategorySelect={handleCategorySelect} />
             </section>
 
+            {/* Handyman results */}
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-semibold">
@@ -297,10 +248,9 @@ export default function Home() {
                   {filteredHandymen.length} {filteredHandymen.length === 1 ? 'professional' : 'professionals'} found
                 </p>
               </div>
+
               {loading ? (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">Loading professionals...</p>
-                </div>
+                <div className="text-center py-12">Loading professionals...</div>
               ) : filteredHandymen.length === 0 ? (
                 <div className="text-center py-12 bg-card/30 rounded-xl border border-dashed border-primary/30">
                   <SearchIcon className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
@@ -312,6 +262,7 @@ export default function Home() {
               )}
             </section>
 
+            {/* Map */}
             {filteredHandymen.length > 0 && (
               <section>
                 <h3 className="text-2xl font-semibold mb-6">Location Map</h3>
@@ -324,7 +275,7 @@ export default function Home() {
 
       <footer className="border-t border-primary/10 mt-16 py-8 bg-card/30">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2024 Fixr. Connecting you with skilled professionals.</p>
+          &copy; 2024 Fixr. Connecting you with skilled professionals.
         </div>
       </footer>
 
