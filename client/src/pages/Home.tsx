@@ -178,7 +178,7 @@ export default function Home() {
 
 
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                    Connect with verified, top-rated technicians for all your home repair and maintenance needs.
+                    Connect with verified ✅, top-rated ⭐⭐⭐ technicians for all your home repair and maintenance needs.
                   </p>
 
                   {/* Search Input */}
