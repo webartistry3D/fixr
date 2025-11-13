@@ -41,9 +41,14 @@ export default function Home() {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.toggle("dark", theme === "dark");
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
     localStorage.setItem("theme", theme);
   }, [theme]);
+
 
   const toggleTheme = () => setTheme(prev => (prev === "light" ? "dark" : "light"));
 
@@ -154,7 +159,7 @@ export default function Home() {
             </h1>
           </div>
 
-          {/* Theme Toggle */}
+          {/* Theme Toggle 
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full border border-border hover:bg-accent transition absolute right-4"
@@ -165,7 +170,7 @@ export default function Home() {
             ) : (
               <Sun className="h-5 w-5 text-yellow-400" />
             )}
-          </button>
+          </button>*/}
         </div>
       </header>
 
