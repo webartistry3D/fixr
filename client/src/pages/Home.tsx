@@ -182,8 +182,8 @@ export default function Home() {
                   </p>
 
                   {/* Search Input */}
-                  <div className="flex flex-col items-center gap-6 pt-8">
-                    <div className="w-full max-w-2xl relative flex items-center">
+                  <div className="flex flex-col items-center gap-6 pt-8 w-full px-4">
+                    <div className="w-full max-w-2xl flex items-center">
                       {/* Search Icon */}
                       <SearchIcon className="absolute left-4 h-5 w-5 text-muted-foreground" />
 
@@ -194,26 +194,27 @@ export default function Home() {
                         onChange={e => handleSearch(e.target.value)}
                         onKeyDown={e => e.key === "Enter" && submitSearch()}
                         placeholder="Search for a service (e.g., electrical, plumbing, HVAC)..."
-                        className="flex-1 h-14 pl-12 pr-4 bg-card border-2 border-primary/30 rounded-l-xl text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/60"
+                        className="flex-1 h-14 pl-12 pr-4 sm:pr-24 bg-card border-2 border-primary/30 rounded-l-xl text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all placeholder:text-muted-foreground/60 min-w-0"
                       />
 
                       {/* Button */}
                       <Button
                         onClick={submitSearch}
-                        className="h-14 px-6 rounded-r-xl flex-shrink-0"
+                        className="h-14 px-4 sm:px-6 rounded-r-xl flex-shrink-0 whitespace-nowrap"
                       >
                         Search
                       </Button>
                     </div>
 
                     {/* Location Info */}
-                    <div className="flex flex-wrap items-center justify-center gap-4">
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-center">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="h-4 w-4 text-primary" />
                         <span>{locationPermission === 'granted' ? 'See location of nearby professionals' : 'Enable location for proximity-based results'}</span>
                       </div>
                     </div>
                   </div>
+
 
 
                 </div>
