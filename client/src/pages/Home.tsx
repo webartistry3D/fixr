@@ -267,7 +267,7 @@ export default function Home() {
                       <Button
                         variant="ghost"
                         onClick={() => toggleSection(section.title)}
-                        className="hidden sm:inline-flex"
+                        className="inline-flex"
                       >
                         {expandedSections[section.title] ? "Hide" : "View all"}
                       </Button>
