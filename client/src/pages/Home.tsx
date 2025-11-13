@@ -167,10 +167,16 @@ export default function Home() {
                     <span className="text-sm font-medium text-primary">Instant Professional Matching</span>
                   </div>
                   <h2 className="text-2xl md:text-4xl font-bold leading-tight">
-                    Find a <span className="text-2xl md:text-4xl ml-4 mr-4 font-orbitron bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-gradient tracking-tight">
+                    <span className="tracking-wide">Find &nbsp;a</span>
+                    <span className="ml-4 md:ml-6 font-orbitron text-2xl md:text-4xl 
+                                bg-gradient-to-r from-primary via-cyan-400 to-primary 
+                                bg-clip-text text-transparent animate-gradient mr-4 md:mr-6">
                       F🔌🛠️ R
-                    </span> Near You
+                    </span>
+                    <span className="tracking-wide">Near &nbsp;You</span>
                   </h2>
+
+
                   <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                     Connect with verified, top-rated technicians for all your home repair and maintenance needs.
                   </p>
