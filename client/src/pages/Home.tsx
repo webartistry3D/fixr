@@ -155,7 +155,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <img src={logoImage} alt="Fixr Logo" className="h-16 w-16 animate-spin-slow" />
             <h1 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-              F 💈🛠️ R
+              F ⚡🛠️ R
             </h1>
           </div>
 
@@ -190,10 +190,10 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                  <h2 className="text-2xl md:text-5xl font-bold leading-tight">
                     Find a{" "}
-                    <span className="text-4xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                      F 💈🛠️ R
+                    <span className="text-3xl md:text-5xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+                      F ⚡🛠️ R
                     </span>{" "}
                     Near You
                   </h2>
