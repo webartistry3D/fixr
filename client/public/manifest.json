@@ -1,7 +1,7 @@
 {
-  "name": "F 💈🛠️ R - Handyman Hub",
-  "short_name": "FIXR",
-  "description": "Find skilled handymen near you. Browse by category, search by skill, and connect instantly.",
+  "name": "F📍🛠️ R - Service Professionals Hub",
+  "short_name": "Fixr",
+  "description": "Find skilled professionals near you. Browse by category, search by skill, and connect instantly.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#14161b",

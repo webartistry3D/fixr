@@ -1,57 +1,132 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { Handyman } from "@/types";
 
+import DynamicMap from "@/components/HandymanMap"; // <-- NEW map component
+
 export default function AddHandyman() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  
+
   const [formData, setFormData] = useState({
     name: "",
     skills: "",
     rating: "5.0",
     whatsapp: "",
     category: "",
-    latitude: "40.7589",
-    longitude: "-73.9851",
-    profilePicture: "electrician"
+    address: "",
+    profilePicture: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Automatically updated when address gets coordinates
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+
+  const [isGeocoding, setIsGeocoding] = useState(false);
+
+  // -------------------------------------------------------------------------
+  // Convert Address → Latitude/Longitude using OpenStreetMap Nominatim
+  // -------------------------------------------------------------------------
+  const geocodeAddress = async (address: string) => {
+    if (!address.trim()) return null;
+
+    try {
+      setIsGeocoding(true);
+
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          address
+        )}`
+      );
+
+      const data = await res.json();
+
+      if (data && data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon)
+        };
+      }
+      return null;
+    } catch (err) {
+      console.error("Geocoding error:", err);
+      return null;
+    } finally {
+      setIsGeocoding(false);
+    }
+  };
+
+  // Auto-geocode whenever user changes the address field
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (formData.address.length < 5) return;
+
+      const c = await geocodeAddress(formData.address);
+      if (c) setCoords(c);
+    }, 700); // debounce typing
+
+    return () => clearTimeout(timer);
+  }, [formData.address]);
+
+  // -------------------------------------------------------------------------
+  // Form Submit
+  // -------------------------------------------------------------------------
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const existingData = localStorage.getItem('handymen');
+    // Ensure coordinates exist
+    if (!coords) {
+      toast({
+        title: "Address Not Found",
+        description: "Please enter a more accurate address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const existingData = localStorage.getItem("handymen");
     const handymen: Handyman[] = existingData ? JSON.parse(existingData) : [];
 
     const newHandyman: Handyman = {
       id: Date.now().toString(),
       name: formData.name,
-      skills: formData.skills.split(',').map(s => s.trim()),
+      skills: formData.skills.split(",").map((s) => s.trim()),
       rating: parseFloat(formData.rating),
       reviews: 0,
       whatsapp: formData.whatsapp,
       profilePicture: formData.profilePicture,
-      latitude: parseFloat(formData.latitude),
-      longitude: parseFloat(formData.longitude),
-      category: formData.category || formData.skills.split(',')[0].trim()
+      category: formData.category || formData.skills.split(",")[0]?.trim(),
+      address: formData.address,
+
+      location: {
+        lat: coords.lat,
+        lng: coords.lng
+      }
     };
 
     handymen.push(newHandyman);
-    localStorage.setItem('handymen', JSON.stringify(handymen));
+    localStorage.setItem("handymen", JSON.stringify(handymen));
 
     toast({
       title: "Success!",
-      description: `${formData.name} has been added successfully.`,
+      description: `${formData.name} has been added successfully.`
     });
 
     setTimeout(() => {
-      setLocation('/');
+      setLocation("/");
     }, 1500);
   };
 
@@ -60,9 +135,8 @@ export default function AddHandyman() {
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <Button
-            data-testid="button-back"
             variant="ghost"
-            onClick={() => setLocation('/')}
+            onClick={() => setLocation("/")}
             className="hover-elevate"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -79,110 +153,116 @@ export default function AddHandyman() {
               Fill out the form below to add a new handyman to the directory
             </CardDescription>
           </CardHeader>
+
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name */}
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name *</Label>
                 <Input
                   id="name"
-                  data-testid="input-name"
                   required
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   placeholder="e.g., John Smith"
                 />
               </div>
 
+              {/* Skills */}
               <div className="space-y-2">
                 <Label htmlFor="skills">Skills (comma-separated) *</Label>
                 <Input
                   id="skills"
-                  data-testid="input-skills"
                   required
                   value={formData.skills}
-                  onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, skills: e.target.value })
+                  }
                   placeholder="e.g., Electrical, Wiring, Lighting"
                 />
               </div>
 
+              {/* Category */}
               <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
                 <Input
                   id="category"
-                  data-testid="input-category"
                   required
                   value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, category: e.target.value })
+                  }
                   placeholder="e.g., Electrical"
                 />
               </div>
 
+              {/* Rating + WhatsApp */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="rating">Rating (0-5) *</Label>
+                  <Label htmlFor="rating">Rating *</Label>
                   <Input
                     id="rating"
-                    data-testid="input-rating"
                     type="number"
                     min="0"
                     max="5"
                     step="0.1"
                     required
                     value={formData.rating}
-                    onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, rating: e.target.value })
+                    }
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="whatsapp">WhatsApp Number *</Label>
+                  <Label htmlFor="whatsapp">WhatsApp *</Label>
                   <Input
                     id="whatsapp"
-                    data-testid="input-whatsapp"
                     type="tel"
                     required
                     value={formData.whatsapp}
-                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    placeholder="+1234567890"
+                    onChange={(e) =>
+                      setFormData({ ...formData, whatsapp: e.target.value })
+                    }
+                    placeholder="+2348012345678"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="latitude">Latitude *</Label>
-                  <Input
-                    id="latitude"
-                    data-testid="input-latitude"
-                    type="number"
-                    step="any"
-                    required
-                    value={formData.latitude}
-                    onChange={(e) => setFormData({ ...formData, latitude: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="longitude">Longitude *</Label>
-                  <Input
-                    id="longitude"
-                    data-testid="input-longitude"
-                    type="number"
-                    step="any"
-                    required
-                    value={formData.longitude}
-                    onChange={(e) => setFormData({ ...formData, longitude: e.target.value })}
-                  />
-                </div>
+              {/* Address */}
+              <div className="space-y-2">
+                <Label htmlFor="address">Address *</Label>
+                <Input
+                  id="address"
+                  required
+                  value={formData.address}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                  placeholder="e.g., Admiralty Way, Lekki Phase 1"
+                />
+                {isGeocoding && (
+                  <p className="text-sm text-muted-foreground">
+                    Geocoding address…
+                  </p>
+                )}
               </div>
 
+              {/* Profile Picture Select */}
               <div className="space-y-2">
                 <Label htmlFor="profilePicture">Profile Picture Type</Label>
                 <select
                   id="profilePicture"
-                  data-testid="select-profile-picture"
-                  className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                   value={formData.profilePicture}
-                  onChange={(e) => setFormData({ ...formData, profilePicture: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      profilePicture: e.target.value
+                    })
+                  }
                 >
                   <option value="electrician">Electrician</option>
                   <option value="plumber">Plumber</option>
@@ -192,12 +272,15 @@ export default function AddHandyman() {
                 </select>
               </div>
 
-              <Button
-                data-testid="button-submit"
-                type="submit"
-                className="w-full"
-                size="lg"
-              >
+              {/* -------------------- MAP COMPONENT -------------------- */}
+              <div className="pt-4">
+                <Label>Location Preview</Label>
+                <div className="h-64 rounded-md overflow-hidden border border-border mt-2">
+                  <DynamicMap coords={coords} />
+                </div>
+              </div>
+
+              <Button type="submit" className="w-full" size="lg">
                 Add Handyman
               </Button>
             </form>

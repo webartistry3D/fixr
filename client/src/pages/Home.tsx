@@ -155,7 +155,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <img src={logoImage} alt="Fixr Logo" className="h-16 w-16 animate-spin-slow" />
             <h1 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-              F ⚡🛠️ R
+              F📍🛠️ R
             </h1>
           </div>
 
@@ -193,14 +193,17 @@ export default function Home() {
                   <h2 className="text-2xl md:text-5xl font-bold leading-tight">
                     Find a{" "}
                     <span className="text-3xl md:text-5xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                      F ⚡🛠️ R
+                      F📍🛠️ R
                     </span>{" "}
-                    Near You
+                    near you
                   </h2>
 
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                    Connect with verified ✅, top-rated ⭐⭐⭐ technicians for all your home repair and maintenance needs.
-                  </p>
+                  <ul className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed space-y-2">
+                    <li>✅ Connect with Verified professionals</li>
+                    <li>⭐ Top-rated experts for any task</li>
+                    <li>🏠 Home repairs & maintenance</li>
+                    <li>🏭 Industrial & facility services</li>
+                  </ul>
 
                   {/* Search Input */}
                   <div className="flex flex-col items-center gap-4 pt-8 w-full px-4">
@@ -253,23 +256,23 @@ export default function Home() {
                 {CATEGORY_SECTIONS.map(section => (
                   // --- Inside your CATEGORY_SECTIONS.map(...) render ---
                   <div key={section.title} className="space-y-6">
-                    <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center justify-between gap-4 ">
                       <div className="flex items-center gap-3">
                         <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-gradient-to-br from-accent/10 to-accent/5 border border-border text-2xl">
                           <span aria-hidden>{section.icon}</span>
                         </div>
                         <div>
                           <h4 className="text-xl font-semibold">{section.title}</h4>
-                          {section.subtitle && <p className="text-sm text-muted-foreground">{section.subtitle}</p>}
+                          {section.subtitle && <p className="text-xs text-muted-foreground">{section.subtitle}</p>}
                         </div>
                       </div>
 
                       <Button
                         variant="ghost"
                         onClick={() => toggleSection(section.title)}
-                        className="inline-flex"
+                        className="inline-flex border border-white-100"
                       >
-                        {expandedSections[section.title] ? "Hide" : "View all"}
+                        {expandedSections[section.title] ? "Close 🔒" : "Open 🔑"}
                       </Button>
                     </div>
 
@@ -340,7 +343,7 @@ export default function Home() {
 
       <footer className="border-t border-border mt-16 py-8 bg-card/30">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          © 2025 FIXR. Powered 💡 by WebArtistry Creations®
+          ©2025 Fixr - Find Skilled Professionals Near You. Powered 💡 by WebArtistry Creations®
         </div>
       </footer>
 

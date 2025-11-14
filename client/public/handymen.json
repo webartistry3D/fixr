@@ -7,8 +7,7 @@
     "reviews": 127,
     "whatsapp": "+1234567890",
     "profilePicture": "electrician",
-    "latitude": 40.7589,
-    "longitude": -73.9851,
+    "address": "Warehouse Road, Apapa, Lagos",
     "category": "Electrical"
   },
   {
@@ -19,8 +18,7 @@
     "reviews": 203,
     "whatsapp": "+1234567891",
     "profilePicture": "plumber",
-    "latitude": 40.7614,
-    "longitude": -73.9776,
+    "address": "Commercial Avenue, Yaba, Lagos",
     "category": "Plumbing"
   },
   {
@@ -31,8 +29,7 @@
     "reviews": 89,
     "whatsapp": "+1234567892",
     "profilePicture": "carpenter",
-    "latitude": 40.7489,
-    "longitude": -73.9680,
+    "address": "Herbert Macaulay Way, Sabo, Yaba, Lagos",
     "category": "Carpentry"
   },
   {
@@ -43,8 +40,7 @@
     "reviews": 156,
     "whatsapp": "+1234567893",
     "profilePicture": "hvac",
-    "latitude": 40.7580,
-    "longitude": -73.9855,
+    "address": "Admiralty Way, Lekki Phase 1, Lagos",
     "category": "HVAC"
   },
   {
@@ -55,8 +51,7 @@
     "reviews": 94,
     "whatsapp": "+1234567894",
     "profilePicture": "painter",
-    "latitude": 40.7505,
-    "longitude": -73.9934,
+    "address": "Bode Thomas Street, Surulere, Lagos",
     "category": "Painting"
   }
 ]

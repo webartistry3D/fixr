@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/Home";
 import AddHandyman from "@/pages/AddHandyman";
 import NotFound from "@/pages/not-found";
+import "leaflet/dist/leaflet.css";
 
 function Router() {
   return (
