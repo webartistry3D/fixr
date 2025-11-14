@@ -10,7 +10,7 @@ export interface CategorySection {
 export const CATEGORY_SECTIONS: CategorySection[] = [
   {
     title: "Core Trades",
-    subtitle: "For major repairs & builds",
+    subtitle: "Major repairs & builds",
     icon: "🛠️",
     categories: [
       { name: "Carpentry", icon: "🪚" },

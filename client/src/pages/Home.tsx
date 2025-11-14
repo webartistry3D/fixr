@@ -190,7 +190,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <h2 className="text-2xl md:text-5xl font-bold leading-tight">
+                  <h2 className="text-xl md:text-4xl font-bold leading-tight">
                     Find a{" "}
                     <span className="text-3xl md:text-5xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                       F📍🛠️ R
@@ -198,7 +198,7 @@ export default function Home() {
                     near you
                   </h2>
 
-                  <ul className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed space-y-2">
+                  <ul className="text-sm md:text-md text-muted-foreground max-w-3xl mx-auto leading-relaxed space-y-2">
                     <li>✅ Connect with Verified professionals</li>
                     <li>⭐ Top-rated experts for any task</li>
                     <li>🏠 Home repairs & maintenance</li>
@@ -217,8 +217,8 @@ export default function Home() {
                           value={searchTerm}
                           onChange={e => handleSearch(e.target.value)}
                           onKeyDown={e => e.key === "Enter" && submitSearch()}
-                          placeholder="Search for a service (e.g., electrical, plumbing, HVAC)..."
-                          className="w-full h-16 pl-12 pr-4 bg-card border-2 border-border rounded-t-xl sm:rounded-l-xl sm:rounded-r-none text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 placeholder:text-muted-foreground/70 transition-all box-border"
+                          placeholder="electrician, plumber, engineer..."
+                          className="w-full h-16 pl-12 text-sm pr-4 bg-card border-2 border-border rounded-t-xl sm:rounded-l-xl sm:rounded-r-none text-lg focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 placeholder:text-muted-foreground/70 transition-all box-border"
                         />
                       </div>
 
@@ -235,7 +235,7 @@ export default function Home() {
                         <MapPin className="h-4 w-4 text-accent" />
                         <span>
                           {locationPermission === "granted"
-                            ? "See location of nearby professionals"
+                            ? "See 📍 location of nearby professionals"
                             : "Enable location for proximity-based results"}
                         </span>
                       </div>
@@ -249,8 +249,8 @@ export default function Home() {
             <section className="py-16 border-t border-border">
               <div className="container mx-auto px-4 space-y-12">
                 <div className="text-center mb-4">
-                  <h3 className="text-3xl font-bold mb-2">Browse by Category</h3>
-                  <p className="text-muted-foreground text-lg">Select a category to find specialized professionals</p>
+                  <h3 className="text-3xl font-bold mb-2">Search by Category</h3>
+                  {/*<p className="text-muted-foreground text-lg">Select a category to find specialized professionals</p>*/}
                 </div>
 
                 {CATEGORY_SECTIONS.map(section => (
@@ -343,7 +343,7 @@ export default function Home() {
 
       <footer className="border-t border-border mt-16 py-8 bg-card/30">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          ©2025 Fixr - Find Skilled Professionals Near You. Powered 💡 by WebArtistry Creations®
+          ©2025 Fixr. Powered 💡 by WebArtistry Creations®
         </div>
       </footer>
 
