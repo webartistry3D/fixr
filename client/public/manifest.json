@@ -1,7 +1,7 @@
 {
   "name": "F📍🛠️ R - Service Professionals Hub",
   "short_name": "Fixr",
-  "description": "Find skilled professionals near you. Browse by category, search by skill, and connect instantly.",
+  "description": "Find skilled professionals near you.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#14161b",
