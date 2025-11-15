@@ -152,9 +152,9 @@ export default function Home() {
       {/* Header */}
       <header className="border-b border-border bg-card/70 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-center relative">
-          <div className="flex items-center gap-3">
-            <img src={logoImage} alt="Fixr Logo" className="h-16 w-16 animate-spin-slow" />
-            <h1 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+          <div className="flex flex-col items-center gap-3">
+            <img src={logoImage} alt="Fixr Logo" className="h-20 w-20 animate-spin-slow" />
+            <h1 className="text-md font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/80 bg-clip-text text-transparent">
               F📍🛠️ R
             </h1>
           </div>
@@ -192,7 +192,7 @@ export default function Home() {
 
                   <h2 className="text-xl md:text-4xl font-bold leading-tight">
                     Find a{" "}
-                    <span className="text-3xl md:text-5xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+                    <span className="text-3xl md:text-5xl font-bold font-orbitron bg-gradient-to-r from-primary via-primary/80 to-primary/80 bg-clip-text text-transparent">
                       F📍🛠️ R
                     </span>{" "}
                     near you
@@ -231,11 +231,11 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-center gap-4 text-center mt-2">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <MapPin className="h-4 w-4 text-accent" />
                         <span>
                           {locationPermission === "granted"
-                            ? "See 📍 location of nearby professionals"
+                            ? "See 📍 location of nearby 👷🏾‍♂️ professionals"
                             : "Enable location for proximity-based results"}
                         </span>
                       </div>
